@@ -1,5 +1,5 @@
 module "varset" {
-  source = "/Users/go/repos/terraform-tfe-variable-sets"
+  source = "github.com/tfo-apj-demos/terraform-tfe-varsets"
 
   tfc_organization = "tfo-apj-demos"
   varset_name = "varset_module_testing"
