@@ -18,7 +18,7 @@ resource "tfe_variable" "this" {
 }
 
 data "tfe_workspace_ids" "this" {
-  for_each = length(var.workspace_tags) == 0? null : toset(var.workspace_tags)
+  for_each = length(var.workspace_tags) == 0 ? null : toset(var.workspace_tags)
   tag_names = [ each.value ]
   exclude_tags = var.workspace_exclude_tags
 }
