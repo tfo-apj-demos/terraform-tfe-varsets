@@ -29,3 +29,15 @@ variable "varset_variables" {
     error_message = "The value for category must be one of \"terraform\" or \"env\"."
   }
 }
+
+variable "workspace_tags" {
+  description = "A list of tags to match workspaces against, for variable sets to be applied to."
+  type = list(string)
+  default = []
+}
+
+variable "workspace_exclude_tags" {
+  description = "A list of tags to exclude workspaces selection."
+  type = list(string)
+  default = []
+}

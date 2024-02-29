@@ -1,6 +1,7 @@
 resource "tfe_variable_set" "this" {
   name          = var.varset_name
   description   = var.varset_description
+  workspace_ids = length(var.workspace_tags) == 0 ? null : data.tfe_workspace_ids.this.ids
 }
 
 resource "tfe_variable" "this" {
@@ -11,4 +12,10 @@ resource "tfe_variable" "this" {
   description     = each.value.description
   variable_set_id = tfe_variable_set.this.id
   sensitive = each.value.sensitive
+}
+
+data "tfe_workspace_ids" "this" {
+  count = length(var.workspace_tags) == 0 ? 0 : 1
+  tag_names = var.workspace_tags
+  exclude_tags = var.workspace_exclude_tags
 }
