@@ -1,7 +1,10 @@
 resource "tfe_variable_set" "this" {
   name          = var.varset_name
   description   = var.varset_description
-  workspace_ids = length(var.workspace_tags) == 0 ? null : [ for name, id in data.tfe_workspace_ids.this[0].ids: id ]
+  workspace_ids = length(var.workspace_tags) == 0 ? null : flatten([ 
+    for workspace in data.tfe_workspace_ids.this: [
+      for name, id in workspace.ids: id ]
+  ])
 }
 
 resource "tfe_variable" "this" {
@@ -15,7 +18,7 @@ resource "tfe_variable" "this" {
 }
 
 data "tfe_workspace_ids" "this" {
-  count = length(var.workspace_tags) == 0 ? 0 : 1
-  tag_names = var.workspace_tags
+  for_each = length(var.workspace_tags) == 0? null : toset(var.workspace_tags)
+  tag_names = [ each.value ]
   exclude_tags = var.workspace_exclude_tags
 }
