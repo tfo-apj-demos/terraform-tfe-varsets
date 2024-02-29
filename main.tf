@@ -1,7 +1,7 @@
 resource "tfe_variable_set" "this" {
   name          = var.varset_name
   description   = var.varset_description
-  workspace_ids = length(var.workspace_tags) == 0 ? null : data.tfe_workspace_ids[0].this.ids
+  workspace_ids = length(var.workspace_tags) == 0 ? null : data.tfe_workspace_ids.this[0].ids
 }
 
 resource "tfe_variable" "this" {
